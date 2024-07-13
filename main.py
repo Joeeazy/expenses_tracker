@@ -6,7 +6,7 @@ from data_entry import get_description, get_amount, get_category, get_date
 class CSV:
     CSV_FILE = "financial_data.csv"
     COLUMNS = ["DATE", "AMOUNT", "CATEGORY", "DESCRIPTION"]
-    FORMAT = "%d-%m-%y"
+    FORMAT = "%d-%m-%Y"
 
     # will have access to the class itself
     @classmethod
@@ -43,8 +43,8 @@ class CSV:
         dataframe = panda.read_csv(cls.CSV_FILE)
         # convert date to date column object
         dataframe["DATE"] = panda.to_datetime(dataframe["DATE"], format=CSV.FORMAT)
-        start_date=datetime.strptime(start_date, CSV.FORMAT)
-        end_date=datetime.strptime(end_date, CSV.FORMAT)
+        start_date = datetime.strptime(start_date, CSV.FORMAT)
+        end_date = datetime.strptime(end_date, CSV.FORMAT)
 
         mask = (dataframe["DATE"] >= start_date) & (dataframe["DATE"] <= end_date)
 
