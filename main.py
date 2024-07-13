@@ -48,20 +48,20 @@ class CSV:
 
         mask = (dataframe["DATE"] >= start_date) & (dataframe["DATE"] <= end_date)
 
-        filtered_dataframe = dataframe.loc(mask)
+        filtered_dataframe = dataframe.loc[mask]
 
         if filtered_dataframe.empty:
             print("No transactions found were found in the given date range")
         else:
             print(f"Transactions from {start_date.strftime(CSV.FORMAT)} to {end_date.strftime(CSV.FORMAT)}")
 
-        print(filtered_dataframe.to_string(index=False, formatters={"DATE": lambda x: x.strftime(CSV.FORMAT)}))
+            print(filtered_dataframe.to_string(index=False, formatters={"DATE": lambda x: x.strftime(CSV.FORMAT)}))
 
-        total_income = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Income"]["AMOUNT"].sum()
-        total_expenses = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Expenses"]["AMOUNT"].sum()
-        print("\nSummary")
-        print(f"Total Income: ${total_income:.2f}")
-        print(f"Total Expenses: ${total_expenses:.2f}")
+            total_income = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Income"]["AMOUNT"].sum()
+            total_expenses = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Expenses"]["AMOUNT"].sum()
+            print("\nSummary")
+            print(f"Total Income: ${total_income:.2f}")
+            print(f"Total Expenses: ${total_expenses:.2f}")
 
         return filtered_dataframe
 
