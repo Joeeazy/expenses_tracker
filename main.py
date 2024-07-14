@@ -59,7 +59,7 @@ class CSV:
             print(filtered_dataframe.to_string(index=False, formatters={"date": lambda x: x.strftime(CSV.FORMAT)}))
 
             total_income = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Income"]["AMOUNT"].sum()
-            total_expenses = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Expenses"]["AMOUNT"].sum()
+            total_expenses = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Expense"]["AMOUNT"].sum()
             print("\nSummary")
             print(f"Total Income: ${total_income:.2f}")
             print(f"Total Expenses: ${total_expenses:.2f}")
@@ -79,8 +79,8 @@ def add():
 def plot_transactions(dataframe):
     dataframe.set_index("date", inplace=True) # index is the way we locate and manipulate different rows
     #two dataframes income dataframe and expenses dataframe
-    income_dataframe = dataframe[dataframe["CATEGORY"] == "Income"].resample("D").sum().reindex(dataframe.index, fill_value=0)
-    expenses_dataframe = dataframe[dataframe["CATEGORY"] == "Expenses"].resample("D").sum().reindex(dataframe.index, fill_value=0)
+    income_dataframe = (dataframe[dataframe["CATEGORY"] == "Income"].resample("D").sum().reindex(dataframe.index, fill_value=0))
+    expenses_dataframe = (dataframe[dataframe["CATEGORY"] == "Expense"].resample("D").sum().reindex(dataframe.index, fill_value=0))
 
     plt.figure(figsize=(10, 5))
     plt.plot(income_dataframe.index, income_dataframe["AMOUNT"], label="Income", color="g")
@@ -106,7 +106,7 @@ def main():
             start_date = get_date("Enter the start date (dd-mm-yyyy): ")
             end_date = get_date("Enter the end date (dd-mm-yyyy): ")
             dataframe = CSV.get_transactions(start_date, end_date)
-            if input("Do You want to see a graph plot? (y/n").lower() == "y":
+            if input("Do You want to see a graph plot? (y/n): ").lower() == "y":
                 plot_transactions(dataframe)
         elif choice == "3":
             print("Exiting...")
