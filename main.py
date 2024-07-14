@@ -2,6 +2,7 @@ import pandas as panda
 import csv
 from datetime import datetime
 from data_entry import get_description, get_amount, get_category, get_date
+import matplotlib.pyplot as plt
 
 class CSV:
     CSV_FILE = "financial_data.csv"
@@ -75,6 +76,22 @@ def add():
 
     CSV.add_entries(date, amount, category, description)
 
+def plot_transactions(dataframe):
+    dataframe.set_index("date", inplace=True) # index is the way we locate and manipulate different rows
+    #two dataframes income dataframe and expenses dataframe
+    income_dataframe = dataframe[dataframe["CATEGORY"] == "Income"].resample("D").sum().reindex(dataframe.index, fill_value=0)
+    expenses_dataframe = dataframe[dataframe["CATEGORY"] == "Expenses"].resample("D").sum().reindex(dataframe.index, fill_value=0)
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(income_dataframe.index, income_dataframe["AMOUNT"], label="Income", color="g")
+    plt.plot(expenses_dataframe.index, expenses_dataframe["AMOUNT"], label="Expenses", color="r")
+    plt.xlabel("Date")
+    plt.ylabel("Amount")
+    plt.title("Income And Expenses Over Time")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 
 def main():
     while True:
@@ -89,6 +106,8 @@ def main():
             start_date = get_date("Enter the start date (dd-mm-yyyy): ")
             end_date = get_date("Enter the end date (dd-mm-yyyy): ")
             dataframe = CSV.get_transactions(start_date, end_date)
+            if input("Do You want to see a graph plot? (y/n").lower() == "y":
+                plot_transactions(dataframe)
         elif choice == "3":
             print("Exiting...")
             break
