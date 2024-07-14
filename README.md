@@ -20,7 +20,6 @@ pip install pandas matplotlib
 The project runs on the console. The main entry point of the application is main.py. To run the program, execute the following command:
 
 ```sh
-Copy code
 python main.py
 ```
 
