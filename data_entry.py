@@ -3,7 +3,7 @@
 
 from datetime import datetime
 
-date_format = "%d-%m-%y"
+date_format = "%d-%m-%Y"
 CATEGORIES = {"I": "Income", "E": "Expenses"}
 
 def get_date(prompt, allow_default=False):

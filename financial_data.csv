@@ -1,5 +1,4 @@
-DATE,AMOUNT,CATEGORY,DESCRIPTION
-15-11-2024,130.5,Income,Salary
-12-07-24,500.0,Income,Sales
-12-07-24,200.0,Expenses,food
-12-07-24,100.0,Expenses,Electricity
+date,AMOUNT,CATEGORY,DESCRIPTION
+12-02-2024,30000.0,Income,Salary
+14-07-2024,400.0,Expenses,Food
+14-07-2024,300.0,Expenses,Rent

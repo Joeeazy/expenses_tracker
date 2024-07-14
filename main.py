@@ -5,7 +5,7 @@ from data_entry import get_description, get_amount, get_category, get_date
 
 class CSV:
     CSV_FILE = "financial_data.csv"
-    COLUMNS = ["DATE", "AMOUNT", "CATEGORY", "DESCRIPTION"]
+    COLUMNS = ["date", "AMOUNT", "CATEGORY", "DESCRIPTION"]
     FORMAT = "%d-%m-%Y"
 
     # will have access to the class itself
@@ -25,7 +25,7 @@ class CSV:
     def add_entries(cls, date, amount, category, description):
         # use csv writer to write dictionaries into the csv file
         new_entry = {
-           "DATE": date,
+           "date": date,
            "AMOUNT": amount,
            "CATEGORY": category,
            "DESCRIPTION": description
@@ -42,11 +42,11 @@ class CSV:
     def get_transactions(cls, start_date, end_date):
         dataframe = panda.read_csv(cls.CSV_FILE)
         # convert date to date column object
-        dataframe["DATE"] = panda.to_datetime(dataframe["DATE"], format=CSV.FORMAT)
+        dataframe["date"] = panda.to_datetime(dataframe["date"], format=CSV.FORMAT)
         start_date = datetime.strptime(start_date, CSV.FORMAT)
         end_date = datetime.strptime(end_date, CSV.FORMAT)
 
-        mask = (dataframe["DATE"] >= start_date) & (dataframe["DATE"] <= end_date)
+        mask = (dataframe["date"] >= start_date) & (dataframe["date"] <= end_date)
 
         filtered_dataframe = dataframe.loc[mask]
 
@@ -55,7 +55,7 @@ class CSV:
         else:
             print(f"Transactions from {start_date.strftime(CSV.FORMAT)} to {end_date.strftime(CSV.FORMAT)}")
 
-            print(filtered_dataframe.to_string(index=False, formatters={"DATE": lambda x: x.strftime(CSV.FORMAT)}))
+            print(filtered_dataframe.to_string(index=False, formatters={"date": lambda x: x.strftime(CSV.FORMAT)}))
 
             total_income = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Income"]["AMOUNT"].sum()
             total_expenses = filtered_dataframe[filtered_dataframe["CATEGORY"] == "Expenses"]["AMOUNT"].sum()
